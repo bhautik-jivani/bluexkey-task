@@ -1,0 +1,55 @@
+version: '3'
+services:
+  web:
+    image: postgres_task:latest
+    container_name: postgres_task_web
+    build:
+      context: ./postgres_task
+      dockerfile: Dockerfile
+    command: ["flask", "run", "--host=0.0.0.0"]
+    ports:
+      - 5000:5000
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+    volumes:
+      - ./postgres_task:/app/
+    depends_on:
+      - db
+    networks:
+      - my-network
+
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: pg_db_task_1
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: SuperSecret!1
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret!1
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - my-network
+
+volumes:
+  pgdata:
+
+networks:
+  my-network:
+    driver: bridge
+    name: my-network

@@ -1,0 +1,47 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask ORM Models</title>
+</head>
+<body>
+    <h1>Users</h1>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }} - {{ user.email }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Posts</h1>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.title }} - {{ post.content }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Comments</h1>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.text }} - {{ comment.user.username }} - {{ comment.post.title }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Tags</h1>
+    <ul>
+        {% for tag in tags %}
+            <li>{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Categories</h1>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
